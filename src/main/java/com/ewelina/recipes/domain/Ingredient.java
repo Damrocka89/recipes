@@ -39,4 +39,12 @@ public class Ingredient {
     public Ingredient() {
     }
 
+    @Override
+    public String toString() {
+        return "Ingredient{" +
+                "description='" + description + '\'' +
+                ", amount=" + amount +
+                ", unitOfMeasure=" + unitOfMeasure +
+                '}';
+    }
 }
