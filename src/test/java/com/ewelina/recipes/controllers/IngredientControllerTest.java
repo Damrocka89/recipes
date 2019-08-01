@@ -4,6 +4,7 @@ import com.ewelina.recipes.command.IngredientCommand;
 import com.ewelina.recipes.command.RecipeCommand;
 import com.ewelina.recipes.services.IngredientService;
 import com.ewelina.recipes.services.RecipeService;
+import com.ewelina.recipes.services.UnitOfMeasureService;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
@@ -24,6 +25,9 @@ public class IngredientControllerTest {
     @Mock
     IngredientService ingredientService;
 
+    @Mock
+    UnitOfMeasureService unitOfMeasureService;
+
     IngredientController controller;
 
     MockMvc mockMvc;
@@ -32,7 +36,7 @@ public class IngredientControllerTest {
     public void setup() throws Exception {
         MockitoAnnotations.initMocks(this);
 
-        controller = new IngredientController(recipeService, ingredientService);
+        controller = new IngredientController(recipeService, ingredientService, unitOfMeasureService);
         mockMvc = MockMvcBuilders.standaloneSetup(controller).build();
     }
 
