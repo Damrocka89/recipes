@@ -1,6 +1,8 @@
 package com.ewelina.recipes.controllers;
 
 import com.ewelina.recipes.command.IngredientCommand;
+import com.ewelina.recipes.command.RecipeCommand;
+import com.ewelina.recipes.command.UnitOfMeasureCommand;
 import com.ewelina.recipes.services.IngredientService;
 import com.ewelina.recipes.services.RecipeService;
 import com.ewelina.recipes.services.UnitOfMeasureService;
@@ -66,4 +68,32 @@ public class IngredientController {
 
         return "redirect:/recipe/" + savedCommand.getRecipeId() + "/ingredient/" + savedCommand.getId() + "/show";
     }
+
+    @GetMapping
+    @RequestMapping("recipe/{recipeId}/ingredient/new")
+    public String newRecipe(@PathVariable String recipeId, Model model) {
+        RecipeCommand recipeCommand = recipeService.findCommandById(Long.valueOf(recipeId));
+//todo raise exc if null
+
+        IngredientCommand ingredientCommand = new IngredientCommand();
+        ingredientCommand.setRecipeId(Long.valueOf(recipeId));
+        model.addAttribute("ingredient", ingredientCommand);
+
+        ingredientCommand.setUom(new UnitOfMeasureCommand());
+
+        model.addAttribute("uomList", unitOfMeasureService.listAllUoms());
+
+        return "/recipe/ingredient/ingredientform";
+    }
+
+    @GetMapping
+    @RequestMapping("recipe/{recipeId}/ingredient/{id}/delete")
+    public String deleteIngredient(@PathVariable String recipeId, @PathVariable String id) {
+        log.debug("deleting ingredient id: " + id);
+
+        ingredientService.deleteById(Long.valueOf(recipeId), Long.valueOf(id));
+        return "redirect:/recipe/" + recipeId + "/ingredients";
+    }
+
+
 }
