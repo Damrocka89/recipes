@@ -1,5 +1,6 @@
 package com.ewelina.recipes.controllers;
 
+import com.ewelina.exceptions.NotFoundException;
 import com.ewelina.recipes.command.RecipeCommand;
 import com.ewelina.recipes.domain.Recipe;
 import com.ewelina.recipes.services.RecipeService;
@@ -55,8 +56,27 @@ public class RecipeControllerTest {
     }
 
     @Test
-    public void testGetNewRecipeForm() throws Exception{
-        RecipeCommand command=new RecipeCommand();
+    public void testGetRecipeNotFound() throws Exception {
+        Recipe recipe = new Recipe();
+        recipe.setId(1L);
+
+        when(recipeService.findById(anyLong())).thenThrow(NotFoundException.class);
+
+        mockMvc.perform(get("/recipe/1/show"))
+                .andExpect(status().isNotFound())
+                .andExpect(view().name("404error"));
+    }
+
+    @Test
+    public void testGetRecipeNotNumber() throws Exception {
+        mockMvc.perform(get("/recipe/abc/show"))
+                .andExpect(status().is4xxClientError())
+                .andExpect(view().name("404error"));
+    }
+
+    @Test
+    public void testGetNewRecipeForm() throws Exception {
+        RecipeCommand command = new RecipeCommand();
 
         when(recipeService.saveRecipeCommand(any())).thenReturn(command);
 
@@ -65,8 +85,9 @@ public class RecipeControllerTest {
                 .andExpect(view().name("recipe/recipeform"))
                 .andExpect(model().attributeExists("recipe"));
     }
+
     @Test
-    public void tesDeleteAction() throws Exception{
+    public void tesDeleteAction() throws Exception {
 
         mockMvc.perform(get("/recipe/1/delete"))
                 .andExpect(status().is3xxRedirection())
@@ -74,7 +95,6 @@ public class RecipeControllerTest {
 
         verify(recipeService, times(1)).deleteById(anyLong());
     }
-
 
 
 }

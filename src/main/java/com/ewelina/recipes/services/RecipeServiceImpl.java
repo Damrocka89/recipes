@@ -1,5 +1,6 @@
 package com.ewelina.recipes.services;
 
+import com.ewelina.exceptions.NotFoundException;
 import com.ewelina.recipes.command.RecipeCommand;
 import com.ewelina.recipes.converters.RecipeCommandToRecipe;
 import com.ewelina.recipes.converters.RecipeToRecipeCommand;
@@ -38,7 +39,7 @@ public class RecipeServiceImpl implements RecipeService {
     public Recipe findById(Long id) {
         Optional<Recipe> recipeOptional = recipeRepository.findById(id);
         if (!recipeOptional.isPresent()) {
-            throw new RuntimeException("Recipe not found");
+            throw new NotFoundException("Recipe not found. For id value: " + id.toString());
         }
         return recipeOptional.get();
     }
