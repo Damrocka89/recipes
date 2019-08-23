@@ -1,6 +1,6 @@
 package com.ewelina.recipes.services;
 
-import com.ewelina.exceptions.NotFoundException;
+import com.ewelina.recipes.exceptions.NotFoundException;
 import com.ewelina.recipes.command.RecipeCommand;
 import com.ewelina.recipes.converters.RecipeCommandToRecipe;
 import com.ewelina.recipes.converters.RecipeToRecipeCommand;

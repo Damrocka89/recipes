@@ -1,4 +1,4 @@
-package com.ewelina.exceptions;
+package com.ewelina.recipes.exceptions;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
