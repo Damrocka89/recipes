@@ -4,4 +4,4 @@
 
 [![codecov](https://codecov.io/gh/Damrocka89/recipes/branch/master/graph/badge.svg)](https://codecov.io/gh/Damrocka89/recipes)
 
-This repository is for an example application built in my Spring Framework 5.
+This repository is an example application built in Spring Framework 5.
